@@ -1,0 +1,2 @@
+# Affihub
+Affihub Automation Earning
