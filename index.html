@@ -493,6 +493,78 @@
     <script src="popup-mailchimp.js"></script>
 <script src="affiliate-display.js"></script>
 <script>
+<script src="affiliate-tracking.js"></script>
 </body>
 </html> 
                                         
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Function to attach tracking to affiliate links
+  function attachAffiliateTracking() {
+    const affiliateOptionsDiv = document.querySelector('.affiliate-options');
+
+    // Check if the container exists
+    if (!affiliateOptionsDiv) {
+        console.log('Affiliate options container (.affiliate-options) not found.');
+        return;
+    }
+
+    // Use MutationObserver to wait for links to be added if they load dynamically
+    const observer = new MutationObserver(function(mutationsList, observer) {
+        for(const mutation of mutationsList) {
+            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                // Links might have been added, try attaching listeners
+                const links = affiliateOptionsDiv.querySelectorAll('a.affiliate-link'); // Assuming links have class 'affiliate-link'
+                if (links.length > 0) {
+                    console.log('Affiliate links found by observer, attaching tracking...');
+                    links.forEach(link => {
+                        // Remove existing listener to prevent duplicates if observer fires multiple times
+                        link.removeEventListener('click', handleAffiliateClick);
+                        // Add the new listener
+                        link.addEventListener('click', handleAffiliateClick);
+                    });
+                    // Optional: Disconnect observer if links are loaded once and won't change
+                    // observer.disconnect(); 
+                }
+            }
+        }
+    });
+
+    // Start observing the target node for configured mutations
+    observer.observe(affiliateOptionsDiv, { childList: true, subtree: true });
+
+    // Also attempt to attach listeners immediately in case links are already present
+    const initialLinks = affiliateOptionsDiv.querySelectorAll('a.affiliate-link');
+     if (initialLinks.length > 0) {
+         console.log('Initial affiliate links found, attaching tracking...');
+         initialLinks.forEach(link => {
+             link.addEventListener('click', handleAffiliateClick);
+         });
+     } else {
+         console.log('No initial affiliate links found. Waiting for dynamic loading via MutationObserver...');
+     }
+  }
+
+  // Handler function for the click event
+  function handleAffiliateClick(event) {
+      const link = event.currentTarget;
+      // Use dataset properties for data attributes (e.g., data-product-id becomes dataset.productId)
+      const platform = link.dataset.platform || 'Unknown Platform'; 
+      const productName = link.dataset.productName || 'Unknown Product'; 
+      const productId = link.dataset.productId || 'Unknown ID'; 
+
+      // Check if trackAffiliateClick function exists before calling
+      if (typeof trackAffiliateClick === 'function') {
+          trackAffiliateClick(platform, productName, productId);
+      } else {
+          console.error('trackAffiliateClick function is not defined.');
+      }
+      // We don't prevent default behavior, allowing the user to navigate to the affiliate link.
+  }
+
+  // Call the function to attach tracking
+  attachAffiliateTracking();
+
+});
+</script>
