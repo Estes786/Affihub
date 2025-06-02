@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produk - AutomarketHub</title>
+    <link rel="stylesheet" href="styles-products.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>AutomarketHub</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="products.html" class="active">Produk</a></li>
+                    <li><a href="reviews.html">Ulasan</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="contact.html">Kontak</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="product-hero">
+        <div class="container">
+            <h2>Produk Terbaik untuk Bisnis Online Anda</h2>
+            <p>Temukan tools, software, dan kursus premium untuk membantu bisnis online Anda berkembang pesat</p>
+            
+            <div class="search-filter">
+                <div class="search-box">
+                    <input type="text" placeholder="Cari produk...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <div class="filter-options">
+                    <select id="categoryFilter">
+                        <option value="all">Semua Kategori</option>
+                        <option value="course">Kursus</option>
+                        <option value="software">Software</option>
+                        <option value="tools">Tools</option>
+                    </select>
+                    <select id="priceFilter">
+                        <option value="all">Semua Harga</option>
+                        <option value="free">Gratis</option>
+                        <option value="paid">Berbayar</option>
+                        <option value="subscription">Langganan</option>
+                    </select>
+                    <select id="sortFilter">
+                        <option value="popular">Paling Populer</option>
+                        <option value="newest">Terbaru</option>
+                        <option value="price-low">Harga: Rendah ke Tinggi</option>
+                        <option value="price-high">Harga: Tinggi ke Rendah</option>
+                        <option value="rating">Rating Tertinggi</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-products">
+        <div class="container">
+            <h2>Produk Unggulan</h2>
+            <div class="product-grid">
+                <!-- Produk 1 -->
+                <div class="product-card">
+                    <div class="product-badge bestseller">TERLARIS</div>
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/300x200/f5f5f5/333333?text=AI+Content+Creator" alt="AI Content Creator Pro">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">SOFTWARE</div>
+                        <h3>AI Content Creator Pro</h3>
+                        <div class="product-rating">
+                            <span class="rating-count">4.5 (128 ulasan)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 1.499.000</span>
+                            <span class="old-price">Rp 2.999.000</span>
+                            <span class="discount">-50%</span>
+                        </div>
+                        <p class="product-description">
+                            Software AI untuk membuat konten blog, sosial media, dan email marketing secara otomatis dengan kualitas tinggi.
+                        </p>
+                        <div class="product-meta">
+                            <span>Akses Seumur Hidup</span>
+                            <span>5.2K+ Pengguna</span>
+                        </div>
+                        <div class="product-actions">
+                            <a href="product-detail.html" class="btn-secondary">Lihat Detail</a>
+                            <a href="#" class="btn-primary">Beli Sekarang</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Produk 2 -->
+                <div class="product-card">
+                    <div class="product-badge new">BARU</div>
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/300x200/f5f5f5/333333?text=Digital+Marketing" alt="Digital Marketing Mastery">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">KURSUS</div>
+                        <h3>Digital Marketing Mastery</h3>
+                        <div class="product-rating">
+                            <span class="rating-count">5.0 (87 ulasan)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 2.750.000</span>
+                            <span class="old-price">Rp 3.500.000</span>
+                            <span class="discount">-21%</span>
+                        </div>
+                        <p class="product-description">
+                            Kursus lengkap digital marketing dari dasar hingga mahir, termasuk SEO, SEM, Social Media, dan Email Marketing.
+                        </p>
+                        <div class="product-meta">
+                            <span>120+ Video</span>
+                            <span>Sertifikat</span>
+                        </div>
+                        <div class="product-actions">
+                            <a href="product-detail.html" class="btn-secondary">Lihat Detail</a>
+                            <a href="#" class="btn-primary">Beli Sekarang</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Produk 3 -->
+                <div class="product-card">
+                    <div class="product-badge hot">HOT</div>
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/300x200/f5f5f5/333333?text=Funnel+Builder" alt="Funnel Builder X">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">TOOLS</div>
+                        <h3>Funnel Builder X</h3>
+                        <div class="product-rating">
+                            <span class="rating-count">4.0 (156 ulasan)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 997.000</span>
+                            <span class="old-price">Rp 1.997.000</span>
+                            <span class="discount">-50%</span>
+                        </div>
+                        <p class="product-description">
+                            Platform all-in-one untuk membuat sales funnel, landing page, dan webinar yang mengkonversi dengan baik.
+                        </p>
+                        <div class="product-meta">
+                            <span>Update Rutin</span>
+                            <span>Support 24/7</span>
+                        </div>
+                        <div class="product-actions">
+                            <a href="product-detail.html" class="btn-secondary">Lihat Detail</a>
+                            <a href="#" class="btn-primary">Beli Sekarang</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="product-categories">
+        <div class="container">
+            <h2>Kategori Produk</h2>
+            <div class="category-grid">
+                <a href="#" class="category-card">
+                    <h3>Software</h3>
+                    <p>24 Produk</p>
+                </a>
+                <a href="#" class="category-card">
+                    <h3>Kursus</h3>
+                    <p>18 Produk</p>
+                </a>
+                <a href="#" class="category-card">
+                    <h3>Tools</h3>
+                    <p>15 Produk</p>
+                </a>
+                <a href="#" class="category-card">
+                    <h3>Marketing</h3>
+                    <p>12 Produk</p>
+                </a>
+                <a href="#" class="category-card">
+                    <h3>Desain</h3>
+                    <p>9 Produk</p>
+                </a>
+                <a href="#" class="category-card">
+                    <h3>AI Tools</h3>
+                    <p>7 Produk</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="all-products">
+        <div class="container">
+            <h2>Semua Produk</h2>
+            <div class="product-grid">
+                <!-- Produk 4 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/300x200/f5f5f5/333333?text=Email+Marketing" alt="Email Marketing Suite">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">TOOLS</div>
+                        <h3>Email Marketing Suite</h3>
+                        <div class="product-rating">
+                            <span class="rating-count">4.5 (92 ulasan)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 799.000</span>
+                            <span class="old-price">Rp 1.299.000</span>
+                            <span class="discount">-38%</span>
+                        </div>
+                        <p class="product-description">
+                            Platform email marketing dengan template siap pakai dan fitur otomatisasi untuk meningkatkan konversi.
+                        </p>
+                        <div class="product-meta">
+                            <span>10K Email/bulan</span>
+                            <span>Unlimited Subscribers</span>
+                        </div>
+                        <div class="product-actions">
+                            <a href="product-detail.html" class="btn-secondary">Lihat Detail</a>
+                            <a href="#" class="btn-primary">Beli Sekarang</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Produk 5 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/300x200/f5f5f5/333333?text=SEO+Mastery" alt="SEO Mastery">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">KURSUS</div>
+                        <h3>SEO Mastery</h3>
+                        <div class="product-rating">
+                            <span class="rating-count">4.0 (75 ulasan)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 1.250.000</span>
+                            <span class="old-price">Rp 1.750.000</span>
+                            <span class="discount">-29%</span>
+                        </div>
+                        <p class="product-description">
+                            Kursus SEO komprehensif untuk meningkatkan peringkat website Anda di mesin pencari dan mendapatkan traffic organik.
+                        </p>
+                        <div class="product-meta">
+                            <span>80+ Video</span>
+                            <span>15+ Worksheet</span>
+                        </div>
+                        <div class="product-actions">
+                            <a href="product-detail.html" class="btn-secondary">Lihat Detail</a>
+                            <a href="#" class="btn-primary">Beli Sekarang</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Produk 6 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/300x200/f5f5f5/333333?text=Social+Media" alt="Social Media Automation">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">SOFTWARE</div>
+                        <h3>Social Media Automation</h3>
+                        <div class="product-rating">
+                            <span class="rating-count">4.2 (63 ulasan)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp 899.000</span>
+                            <span class="old-price">Rp 1.499.000</span>
+                            <span class="discount">-40%</span>
+                        </div>
+                        <p class="product-description">
+                            Software untuk mengotomatisasi posting dan engagement di berbagai platform sosial media secara terjadwal.
+                        </p>
+                        <div class="product-meta">
+                            <span>10 Platform</span>
+                            <span>Unlimited Posts</span>
+                        </div>
+                        <div class="product-actions">
+                            <a href="product-detail.html" class="btn-secondary">Lihat Detail</a>
+                            <a href="#" class="btn-primary">Beli Sekarang</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <a href="index.html"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="#"><i class="fas fa-bookmark"></i><span>Simpan</span></a>
+        <a href="#"><i class="fas fa-search"></i><span>Cari</span></a>
+        <a href="#"><i class="far fa-smile"></i><span>:D</span></a>
+        <a href="#"><i class="fas fa-ellipsis-h"></i><span>Lainnya</span></a>
+    </div>
+
+    <script>
+        // Simple script to handle mobile navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav a');
+            
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (this.getAttribute('href') === '#') {
+                        e.preventDefault();
+                    }
+                    
+                    mobileNavLinks.forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

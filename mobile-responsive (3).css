@@ -1,0 +1,283 @@
+/* Mobile Responsive Styles */
+
+/* Small devices (phones, 576px and down) */
+@media (max-width: 576px) {
+    /* Base adjustments */
+    body {
+        font-size: 16px;
+    }
+    
+    .container {
+        width: 95%;
+        padding: 0 10px;
+    }
+    
+    /* Header & Navigation */
+    .nav-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .mobile-menu-toggle {
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+    }
+    
+    .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 15px;
+    }
+    
+    .nav-links.active {
+        display: flex;
+    }
+    
+    .nav-links li a {
+        display: block;
+        padding: 10px 0;
+    }
+    
+    /* Hero Section */
+    .hero-section {
+        padding: 40px 0;
+        text-align: center;
+    }
+    
+    .hero-section .container {
+        flex-direction: column;
+    }
+    
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+    
+    .hero-content p {
+        font-size: 1rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .hero-buttons .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    /* Stats Section */
+    .stats-grid {
+        flex-wrap: wrap;
+    }
+    
+    .stat-item {
+        flex: 0 0 50%;
+        padding: 15px 10px;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+    
+    .stat-text {
+        font-size: 0.9rem;
+    }
+    
+    /* Categories Section */
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .category-card {
+        padding: 20px 15px;
+    }
+    
+    .category-icon {
+        font-size: 2rem;
+        margin-bottom: 15px;
+    }
+    
+    .category-card h3 {
+        font-size: 1.1rem;
+    }
+    
+    .category-card p {
+        font-size: 0.9rem;
+    }
+    
+    /* Featured Products */
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .product-card {
+        margin-bottom: 20px;
+    }
+    
+    /* CTA Section */
+    .cta-section {
+        padding: 40px 0;
+    }
+    
+    .cta-content h2 {
+        font-size: 1.8rem;
+    }
+    
+    .timer {
+        gap: 10px;
+    }
+    
+    .timer-item {
+        padding: 10px;
+        min-width: 70px;
+    }
+    
+    .timer-item .number {
+        font-size: 1.5rem;
+    }
+    
+    /* Newsletter Section */
+    .newsletter-form {
+        flex-direction: column;
+    }
+    
+    .newsletter-form input {
+        width: 100%;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+    
+    .newsletter-form button {
+        width: 100%;
+        border-radius: 5px;
+    }
+    
+    /* Footer */
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-col {
+        margin-bottom: 30px;
+    }
+}
+
+/* Medium devices (tablets, 577px to 768px) */
+@media (min-width: 577px) and (max-width: 768px) {
+    /* Header & Navigation */
+    .mobile-menu-toggle {
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+    }
+    
+    .nav-container {
+        position: relative;
+    }
+    
+    .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        margin-top: 15px;
+    }
+    
+    .nav-links.active {
+        display: flex;
+    }
+    
+    /* Hero Section */
+    .hero-section .container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    /* Categories Section */
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* Featured Products */
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* Newsletter Section */
+    .newsletter-form {
+        max-width: 400px;
+    }
+    
+    /* Footer */
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Large devices (desktops, 769px to 992px) */
+@media (min-width: 769px) and (max-width: 992px) {
+    /* Hero Section */
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+    
+    /* Categories Section */
+    .category-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    /* Featured Products */
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Extra touch target improvements for mobile */
+@media (max-width: 768px) {
+    /* Increase touch targets */
+    a, button, .btn, input[type="submit"] {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Improve spacing */
+    section {
+        padding: 40px 0;
+    }
+    
+    .section-header {
+        margin-bottom: 30px;
+    }
+    
+    /* Fix z-index issues */
+    .product-badge {
+        z-index: 2;
+    }
+    
+    /* Remove any floating elements that might cause overlap */
+    .clearfix::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+}
+
+/* Fix for the red button that appears in screenshots */
+.floating-button,
+.recording-button,
+.browser-control {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    z-index: -999 !important;
+    position: absolute !important;
+    pointer-events: none !important;
+}
