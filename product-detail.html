@@ -98,7 +98,7 @@
                     </div>
                     
                     <div class="product-actions">
-                        <a href="https://warriorplus.com/o2/a/xyz123/0" class="btn-primary" target="_blank">Beli Sekarang</a>
+                        <a href="https://bit.ly/4kDD5HA" class="btn-primary" target="_blank">Beli Sekarang</a>
                         <button class="btn-wishlist"><i class="far fa-heart"></i> Wishlist</button>
                         <div class="share-buttons">
                             <span>Bagikan:</span>
@@ -639,5 +639,43 @@
     </footer>
 
     <script src="product-detail-script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Fungsi untuk mengambil data JSON
+    fetch('affiliate-links.json') // Pastikan path ke file JSON benar
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Gagal memuat file JSON: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Cari produk dengan id 'super-ai'
+            const product = data.products.find(p => p.id === 'super-ai');
+            
+            if (product && product.affiliate_links && product.affiliate_links.length > 0) {
+                // Ambil link pertama (misalnya link Official yang sudah diperbaiki)
+                const affiliateLink = product.affiliate_links[0].url;
+                
+                // Cari tombol 'Beli Sekarang'
+                // Gunakan selector yang lebih spesifik jika perlu, misal tambah id="buyButton"
+                const buyButton = document.querySelector('.product-actions .btn-primary'); 
+                
+                if (buyButton) {
+                    // Update atribut href pada tombol
+                    buyButton.href = affiliateLink;
+                    console.log('Link tombol Beli Sekarang berhasil diperbarui ke:', affiliateLink);
+                } else {
+                    console.error('Tombol Beli Sekarang tidak ditemukan.');
+                }
+            } else {
+                console.error('Data produk atau link affiliate untuk super-ai tidak ditemukan di JSON.');
+            }
+        })
+        .catch(error => {
+            console.error('Terjadi kesalahan saat memproses data affiliate:', error);
+        });
+});
+</script>
 </body>
 </html>
