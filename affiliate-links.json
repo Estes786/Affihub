@@ -2,14 +2,20 @@
   "products": [
     {
       "id": "super-ai",
-      "name": "Super AI: Aplikasi AI All-in-One",
-      "category": "SOFTWARE",
-      "description": "Software AI untuk membuat konten blog, sosial media, dan email marketing secara otomatis dengan kualitas tinggi.",
-      "image": "path/to/super-ai-image.jpg",
-      "rating": 4.5,
-      "review_count": 128,
-      "affiliate_links": [https://bit.ly/4kDD5HA 
+      // ... data produk lainnya
+      "affiliate_links": [
         {
+          "platform": "Official",
+          "name": "Website Resmi",
+          "logo": "path/to/official-logo.png",
+          "url": "https://bit.ly/4kDD5HA", // <-- Link bit.ly dimasukkan di sini
+          "price": 1499000,
+          "discount_price": null,
+          "currency": "IDR",
+          "utm_params": "utm_source=affihub&utm_medium=review&utm_campaign=super_ai",
+          "active": true
+        },
+}
           "platform": "Official",
           "name": "Website Resmi",
           "logo": "path/to/official-logo.png",
