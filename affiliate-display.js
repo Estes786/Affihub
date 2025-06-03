@@ -34,22 +34,36 @@ async function loadAffiliateLinks(productId) {
         minimumFractionDigits: 0
       }).format(link.price);
       
-      // Buat elemen link afiliasi
-      const affiliateCard = document.createElement('a');
-      affiliateCard.href = fullUrl;
-      affiliateCard.className = `affiliate-card ${link.platform.toLowerCase()}`;
-      affiliateCard.target = '_blank';
-      affiliateCard.rel = 'nofollow';
-      
-      affiliateCard.innerHTML = `
-        <div class="affiliate-logo">
-          <img src="${link.logo}" alt="${link.name}">
-        </div>
-        <div class="affiliate-info">
-          <span class="affiliate-platform">${link.name}</span>
-          <span class="affiliate-price">${formattedPrice}</span>
-          <span class="affiliate-cta">Beli di ${link.name}</span>
-        </div>
+      // ... kode sebelumnya ...
+
+// Buat elemen link afiliasi
+const affiliateCard = document.createElement('a');
+affiliateCard.href = fullUrl;
+affiliateCard.target = '_blank';
+affiliateCard.rel = 'nofollow';
+
+// --- PERUBAHAN DIMULAI DI SINI ---
+// Tambahkan class yang dibutuhkan untuk tracking
+affiliateCard.classList.add('affiliate-card', `affiliate-${link.platform.toLowerCase()}`, 'affiliate-link'); 
+
+// Tambahkan atribut data untuk tracking
+affiliateCard.dataset.platform = link.platform; // Ambil dari data JSON
+affiliateCard.dataset.productId = productId; // Ambil dari data-product-id di HTML
+// Untuk product name, kita bisa gunakan productId sementara, atau Anda bisa sesuaikan jika punya nama produk spesifik di JSON
+affiliateCard.dataset.productName = productId; 
+// --- PERUBAHAN SELESAI DI SINI ---
+
+// Setel konten innerHTML (logo, nama platform, dll.)
+affiliateCard.innerHTML = `
+    <img src="${link.logo}" alt="${link.name}" class="affiliate-logo">
+    <span class="affiliate-platform">${link.name}</span>
+    <span class="affiliate-cta">Beli di ${link.name}</span>
+`;
+
+container.appendChild(affiliateCard);
+
+// ... kode setelahnya ...
+
       `;
       
       container.appendChild(affiliateCard);
