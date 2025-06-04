@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AffiHub Analytics Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Chart.js untuk visualisasi -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Datepicker untuk filter tanggal -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --light-bg: #f8f9fa;
+            --dark-text: #343a40;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+        }
+        
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-radius: 0 0 15px 15px;
+        }
+        
+        .summary-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .summary-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .card-title {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+        
+        .card-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .chart-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .filter-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .table-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+            overflow-x: auto;
+        }
+        
+        .map-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+            height: 400px;
+        }
+        
+        .nav-tabs .nav-link {
+            color: var(--dark-text);
+            border: none;
+            border-bottom: 2px solid transparent;
+            padding: 10px 15px;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--primary-color);
+            background: none;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .table-hover tbody tr:hover {
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+        
+        .progress {
+            height: 8px;
+            margin-top: 5px;
+        }
+        
+        .progress-bar {
+            background-color: var(--primary-color);
+        }
+        
+        .text-primary {
+            color: var(--primary-color) !important;
+        }
+        
+        .text-success {
+            color: var(--secondary-color) !important;
+        }
+        
+        @media (max-width: 768px) {
+            .card-value {
+                font-size: 1.5rem;
+            }
+            
+            .chart-container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="dashboard-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1><i class="bi bi-bar-chart-line"></i> AffiHub Analytics</h1>
+                    <p class="mb-0">Dashboard Performa Afiliasi</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="btn-group">
+                        <button class="btn btn-light" id="refreshData">
+                            <i class="bi bi-arrow-clockwise"></i> Refresh Data
+                        </button>
+                        <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#settingsModal">
+                            <i class="bi bi-gear"></i> Pengaturan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Filter Section -->
+        <div class="filter-section mb-4">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="dateRange" class="form-label"><i class="bi bi-calendar3"></i> Rentang Tanggal</label>
+                    <input type="text" class="form-control" id="dateRange" placeholder="Pilih rentang tanggal">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="productCategory" class="form-label"><i class="bi bi-tag"></i> Kategori Produk</label>
+                    <select class="form-select" id="productCategory">
+                        <option value="all">Semua Kategori</option>
+                        <option value="ai">AI & Software</option>
+                        <option value="electronics">Elektronik</option>
+                        <option value="fashion">Fashion</option>
+                        <option value="health">Kesehatan</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="deviceFilter" class="form-label"><i class="bi bi-laptop"></i> Perangkat</label>
+                    <select class="form-select" id="deviceFilter">
+                        <option value="all">Semua Perangkat</option>
+                        <option value="desktop">Desktop</option>
+                        <option value="mobile">Mobile</option>
+                        <option value="tablet">Tablet</option>
+                    </select>
+                </div>
+                <div class="col-md-2 mb-3 d-flex align-items-end">
+                    <button class="btn btn-primary w-100" id="applyFilters">
+                        <i class="bi bi-funnel"></i> Terapkan
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <div class="summary-card text-center">
+                    <div class="card-icon text-primary">
+                        <i class="bi bi-mouse"></i>
+                    </div>
+                    <div class="card-title">TOTAL KLIK AFILIASI</div>
+                    <div class="card-value">1,248</div>
+                    <div class="text-success small">
+                        <i class="bi bi-graph-up-arrow"></i> +12.5% dari bulan lalu
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="summary-card text-center">
+                    <div class="card-icon text-success">
+                        <i class="bi bi-currency-dollar"></i>
+                    </div>
+                    <div class="card-title">ESTIMASI PENDAPATAN</div>
+                    <div class="card-value">Rp 4,5jt</div>
+                    <div class="text-success small">
+                        <i class="bi bi-graph-up-arrow"></i> +8.3% dari bulan lalu
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="summary-card text-center">
+                    <div class="card-icon" style="color: #e74c3c;">
+                        <i class="bi bi-box-seam"></i>
+                    </div>
+                    <div class="card-title">PRODUK AKTIF</div>
+                    <div class="card-value">24</div>
+                    <div class="text-success small">
+                        <i class="bi bi-plus-circle"></i> 3 produk baru bulan ini
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="summary-card text-center">
+                    <div class="card-icon" style="color: #9b59b6;">
+                        <i class="bi bi-arrow-repeat"></i>
+                    </div>
+                    <div class="card-title">RATA-RATA CTR</div>
+                    <div class="card-value">3.2%</div>
+                    <div class="text-danger small">
+                        <i class="bi bi-graph-down-arrow"></i> -0.5% dari bulan lalu
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="row">
+            <!-- Trend Chart -->
+            <div class="col-lg-8">
+                <div class="chart-container">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0"><i class="bi bi-graph-up"></i> Tren Klik Afiliasi</h5>
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-outline-primary active" data-period="daily">Harian</button>
+                            <button class="btn btn-outline-primary" data-period="weekly">Mingguan</button>
+                            <button class="btn btn-outline-primary" data-period="monthly">Bulanan</button>
+                        </div>
+                    </div>
+                    <canvas id="trendChart" height="250"></canvas>
+                </div>
+            </div>
+            
+            <!-- Traffic Source Chart -->
+            <div class="col-lg-4">
+                <div class="chart-container">
+                    <h5 class="mb-3"><i class="bi bi-pie-chart"></i> Sumber Trafik</h5>
+                    <canvas id="trafficSourceChart" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Product Performance Chart -->
+            <div class="col-lg-8">
+                <div class="chart-container">
+                    <h5 class="mb-3"><i class="bi bi-bar-chart"></i> Performa Produk Afiliasi</h5>
+                    <canvas id="productPerformanceChart" height="300"></canvas>
+                </div>
+            </div>
+            
+            <!-- Visitor Demographics -->
+            <div class="col-lg-4">
+                <div class="chart-container">
+                    <h5 class="mb-3"><i class="bi bi-people"></i> Demografi Pengunjung</h5>
+                    <ul class="nav nav-tabs mb-3" id="demographicsTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="age-tab" data-bs-toggle="tab" data-bs-target="#age" type="button" role="tab">Usia</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="gender-tab" data-bs-toggle="tab" data-bs-target="#gender" type="button" role="tab">Gender</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="device-tab" data-bs-toggle="tab" data-bs-target="#device" type="button" role="tab">Perangkat</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="demographicsTabContent">
+                        <div class="tab-pane fade show active" id="age" role="tabpanel">
+                            <canvas id="ageChart" height="220"></canvas>
+                        </div>
+                        <div class="tab-pane fade" id="gender" role="tabpanel">
+                            <canvas id="genderChart" height="220"></canvas>
+                        </div>
+                        <div class="tab-pane fade" id="device" role="tabpanel">
+                            <canvas id="deviceChart" height="220"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visitor Map -->
+        <div class="row">
+            <div class="col-12">
+                <div class="chart-container">
+                    <h5 class="mb-3"><i class="bi bi-geo-alt"></i> Peta Pengunjung</h5>
+                    <div id="visitorMap" class="map-container">
+                        <!-- Map will be loaded here -->
+                        <div class="text-center py-5">
+                            <img src="https://i.imgur.com/JXzDDKs.png" alt="Indonesia Visitor Map" class="img-fluid" style="max-height: 350px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Performance Table -->
+        <div class="row">
+            <div class="col-12">
+                <div class="table-container">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0"><i class="bi bi-table"></i> Detail Performa Produk</h5>
+                        <div class="input-group" style="max-width: 300px;">
+                            <input type="text" class="form-control" placeholder="Cari produk..." id="productSearch">
+                            <button class="btn btn-outline-secondary" type="button">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Produk <i class="bi bi-arrow-down-up"></i></th>
+                                    <th scope="col">Kategori</th>
+                                    <th scope="col">Klik <i class="bi bi-arrow-down-up"></i></th>
+                                    <th scope="col">CTR <i class="bi bi-arrow-down-up"></i></th>
+                                    <th scope="col">Est. Pendapatan <i class="bi bi-arrow-down-up"></i></th>
+                                    <th scope="col">Konversi <i class="bi bi-arrow-down-up"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Super AI Assistant</td>
+                                    <td><span class="badge bg-info">AI & Software</span></td>
+                                    <td>356</td>
+                                    <td>4.8%</td>
+                                    <td>Rp 1,780,000</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <span class="me-2">5.2%</span>
+                                            <div class="progress flex-grow-1">
+                                                <div class="progress-bar" role="progressbar" style="width: 52%" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Content Creator Pro</td>
+                                    <td><span class="badge bg-info">AI & Software</span></td>
+                                    <td>289</td>
+                                    <td>3.9%</td>
+                                    <td>Rp 1,445,000</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <span class="me-2">4.8%</span>
+                                            <div class="progress flex-grow-1">
+                                                <div class="progress-bar" role="progressbar" style="width: 48%" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Smart Watch Pro</td>
+                                    <td><span class="badge bg-warning">Elektronik</span></td>
+                                    <td>187</td>
+                                    <td>2.5%</td>
+                                    <td>Rp 561,000</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <span class="me-2">3.2%</span>
+                                            <div class="progress flex-grow-1">
+                                                <div class="progress-bar" role="progressbar" style="width: 32%" aria-valuenow="32" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Wireless Earbuds</td>
+                                    <td><span class="badge bg-warning">Elektronik</span></td>
+                                    <td>142</td>
+                                    <td>1.9%</td>
+                                    <td>Rp 284,000</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <span class="me-2">2.1%</span>
+                                            <div class="progress flex-grow-1">
+                                                <div class="progress-bar" role="progressbar" style="width: 21%" aria-valuenow="21" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Vitamin Kompleks</td>
+                                    <td><span class="badge bg-success">Kesehatan</span></td>
+                                    <td>98</td>
+                                    <td>1.3%</td>
+                                    <td>Rp 196,000</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <span class="me-2">2.0%</span>
+                                            <div class="progress flex-grow-1">
+                                                <div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>Menampilkan 5 dari 24 produk</div>
+                        <nav>
+                            <ul class="pagination pagination-sm">
+                                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal fade" id="settingsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Pengaturan Dashboard</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Tema Dashboard</label>
+                        <select class="form-select" id="themeSelector">
+                            <option value="light">Light (Default)</option>
+                            <option value="dark">Dark</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Aksen Warna</label>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary color-option active" data-color="blue"></button>
+                            <button class="btn btn-success color-option" data-color="green"></button>
+                            <button class="btn btn-danger color-option" data-color="red"></button>
+                            <button class="btn btn-warning color-option" data-color="orange"></button>
+                            <button class="btn btn-info color-option" data-color="teal"></button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Interval Refresh Data</label>
+                        <select class="form-select" id="refreshInterval">
+                            <option value="0">Manual</option>
+                            <option value="300">5 menit</option>
+                            <option value="900">15 menit</option>
+                            <option value="1800">30 menit</option>
+                            <option value="3600">1 jam</option>
+                        </select>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="showEstimations" checked>
+                        <label class="form-check-label" for="showEstimations">Tampilkan Estimasi Pendapatan</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Simpan Pengaturan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap & Other Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Initialize date range picker
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulate loading data from Google Analytics
+            document.getElementById('refreshData').addEventListener('click', function() {
+                this.disabled = true;
+                this.innerHTML = '<i class="bi bi-arrow-repeat"></i> Memuat Data...';
+                
+                setTimeout(() => {
+                    this.disabled = false;
+                    this.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Refresh Data';
+                    alert('Data berhasil diperbarui dari Google Analytics!');
+                }, 1500);
+            });
+            
+            // Initialize charts
+            initCharts();
+            
+            // Initialize flatpickr for date range
+            flatpickr("#dateRange", {
+                mode: "range",
+                dateFormat: "d/m/Y",
+                defaultDate: [new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), new Date()],
+                locale: {
+                    firstDayOfWeek: 1,
+                    weekdays: {
+                        shorthand: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
+                        longhand: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu']
+                    },
+                    months: {
+                        shorthand: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+                        longhand: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
+                    }
+                }
+            });
+        });
+
+        function initCharts() {
+            // Trend Chart
+            const trendCtx = document.getElementById('trendChart').getContext('2d');
+            const trendChart = new Chart(trendCtx, {
+                type: 'line',
+                data: {
+                    labels: ['1 Jun', '2 Jun', '3 Jun', '4 Jun', '5 Jun', '6 Jun', '7 Jun', '8 Jun', '9 Jun', '10 Jun', '11 Jun', '12 Jun', '13 Jun', '14 Jun'],
+                    datasets: [{
+                        label: 'Klik Afiliasi',
+                        data: [65, 59, 80, 81, 56, 55, 40, 45, 60, 75, 85, 90, 88, 79],
+                        borderColor: '#3498db',
+                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                drawBorder: false
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Traffic Source Chart
+            const trafficCtx = document.getElementById('trafficSourceChart').getContext('2d');
+            const trafficChart = new Chart(trafficCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Sosial Media', 'Organik', 'Direct', 'Referral', 'Email'],
+                    datasets: [{
+                        data: [35, 25, 20, 15, 5],
+                        backgroundColor: [
+                            '#3498db',
+                            '#2ecc71',
+                            '#e74c3c',
+                            '#f39c12',
+                            '#9b59b6'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    cutout: '65%'
+                }
+            });
+
+            // Product Performance Chart
+            const productCtx = document.getElementById('productPerformanceChart').getContext('2d');
+            const productChart = new Chart(productCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Super AI Assistant', 'Content Creator Pro', 'Smart Watch Pro', 'Wireless Earbuds', 'Vitamin Kompleks'],
+                    datasets: [{
+                        label: 'Jumlah Klik',
+                        data: [356, 289, 187, 142, 98],
+                        backgroundColor: '#3498db',
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                drawBorder: false
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Age Chart
+            const ageCtx = document.getElementById('ageChart').getContext('2d');
+            const ageChart = new Chart(ageCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['18-24', '25-34', '35-44', '45-54', '55+'],
+                    datasets: [{
+                        label: 'Pengunjung',
+                        data: [15, 35, 25, 18, 7],
+                        backgroundColor: '#3498db',
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Gender Chart
+            const genderCtx = document.getElementById('genderChart').getContext('2d');
+            const genderChart = new Chart(genderCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Pria', 'Wanita', 'Tidak Diketahui'],
+                    datasets: [{
+                        data: [45, 48, 7],
+                        backgroundColor: [
+                            '#3498db',
+                            '#e74c3c',
+                            '#95a5a6'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Device Chart
+            const deviceCtx = document.getElementById('deviceChart').getContext('2d');
+            const deviceChart = new Chart(deviceCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Mobile', 'Desktop', 'Tablet'],
+                    datasets: [{
+                        data: [65, 30, 5],
+                        backgroundColor: [
+                            '#3498db',
+                            '#2ecc71',
+                            '#f39c12'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    cutout: '60%'
+                }
+            });
+        }
+
+        // Connect to Google Analytics 4 (Placeholder function)
+        function connectToGA4() {
+            // This would be replaced with actual GA4 API connection code
+            console.log('Connecting to Google Analytics 4...');
+            
+            // In a real implementation, you would use the Google Analytics Data API
+            // to fetch data from your GA4 property using your measurement ID (G-CM3MN6KHNX)
+            
+            return {
+                success: true,
+                message: 'Connected to Google Analytics 4 successfully'
+            };
+        }
+        
+        // Fetch affiliate click data (Placeholder function)
+        function fetchAffiliateClickData(startDate, endDate, filters = {}) {
+            // This would be replaced with actual GA4 data fetching code
+            console.log(`Fetching affiliate click data from ${startDate} to ${endDate}`);
+            console.log('Filters:', filters);
+            
+            // In a real implementation, you would query the GA4 API for the 
+            // affiliate_link_click events we configured earlier
+            
+            return {
+                success: true,
+                data: {
+                    // Sample data structure that would come from GA4
+                    totalClicks: 1248,
+                    clicksByDate: {/* date-based data */},
+                    clicksByProduct: {/* product-based data */},
+                    clicksBySource: {/* traffic source data */}
+                }
+            };
+        }
+    </script>
+</body>
+</html>
