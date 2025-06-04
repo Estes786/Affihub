@@ -1,12 +1,61 @@
 // Fungsi untuk melacak klik afiliasi
 function trackAffiliateClick(platform, productName, productId) {
-  // Kirim event ke Google Analytics
-  gtag('event', 'affiliate_click', {
-    'event_category': 'Affiliate',
-    'event_label': platform,
-    'affiliate_platform': platform,
-    'product_name': productName,
-    'product_id': productId
-  });
-  console.log('Affiliate click tracked:', platform, productName, productId); // Added for debugging
+  // Pastikan gtag tersedia sebelum memanggilnya (jika menggunakan Google Analytics)
+  if (typeof gtag === 'function') {
+    gtag('event', 'affiliate_click', {
+      'event_category': 'Affiliate',
+      'event_label': platform, // Menggunakan platform sebagai label event
+      'affiliate_platform': platform,
+      'product_name': productName,
+      'product_id': productId,
+      // Anda bisa menambahkan parameter lain jika perlu
+      // 'value': 1, // Contoh: jika ingin memberi nilai pada event
+      // 'currency': 'IDR' // Contoh: mata uang
+    });
+  } else {
+    console.warn('gtag function not found. Google Analytics might not be loaded.');
+  }
+  // Tetap log ke console untuk debugging
+  console.log(`Affiliate click tracked: Platform=${platform}, Product=${productName} (ID: ${productId})`);
 }
+
+// Event Listener untuk klik link afiliasi
+document.addEventListener('DOMContentLoaded', function() {
+  const productDetailContainer = document.querySelector('.product-detail .container');
+
+  if (productDetailContainer) {
+    // Gunakan event delegation untuk menangani klik pada link yang mungkin ditambahkan secara dinamis
+    productDetailContainer.addEventListener('click', function(event) {
+      // Cari elemen link terdekat yang memiliki data-platform (baik statis maupun dinamis)
+      const affiliateLink = event.target.closest('a[data-platform]');
+
+      if (affiliateLink) {
+        // Dapatkan data dari atribut data-*
+        const platform = affiliateLink.dataset.platform;
+        const productId = affiliateLink.dataset.productId;
+        const productName = affiliateLink.dataset.productName;
+
+        // Pastikan semua data ada sebelum tracking
+        if (platform && productId && productName) {
+          trackAffiliateClick(platform, productName, productId);
+          
+          // Optional: Tambahkan delay kecil sebelum navigasi jika diperlukan
+          // agar tracking sempat terkirim, terutama jika target="_blank" tidak digunakan.
+          // Jika menggunakan target="_blank", biasanya tidak perlu delay.
+          // Contoh delay (jika diperlukan):
+          /*
+          if (!affiliateLink.target || affiliateLink.target.toLowerCase() !== '_blank') {
+            event.preventDefault(); // Hentikan navigasi default
+            setTimeout(function() {
+              window.location.href = affiliateLink.href; // Lanjutkan navigasi setelah delay
+            }, 300); // Delay 300ms
+          }
+          */
+        } else {
+          console.warn('Missing data attributes for affiliate tracking on clicked element:', affiliateLink);
+        }
+      }
+    });
+  }
+});
+
