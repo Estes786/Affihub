@@ -2,7 +2,8 @@
 async function loadAffiliateLinks(productId) {
   try {
     // Dalam implementasi nyata, ini bisa diambil dari API atau file JSON
-    const response = await fetch('/data/affiliate-links.json');
+    const response = await fetch('affiliate-links.json'); // Hapus /data/
+
     const data = await response.json();
     
     // Cari produk berdasarkan ID
