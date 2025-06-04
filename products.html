@@ -319,60 +319,7 @@
         });
    <!-- Kode HTML Anda yang lain di atas -->
 
-<script>
-// Fungsi untuk mengirim event klik afiliasi ke GA4
-function trackAffiliateClick(platform, productId, url) {
-  if (typeof gtag === 'function') {
-    gtag('event', 'affiliate_click', {
-      'event_category': 'Affiliate',
-      'event_label': platform + ' - ' + productId, // Contoh: WarriorPlus - NamaProduk
-      'platform': platform,
-      'product_id': productId, // Anda mungkin perlu cara untuk mendapatkan ID produk spesifik
-      'affiliate_url': url
-    });
-    console.log('GA4 Event Sent: affiliate_click for', platform, productId);
-    // Jika ingin memunculkan alert untuk tes seperti sebelumnya, uncomment baris di bawah
-    // alert('Tracking Affiliate Click:\nPlatform: ' + platform + '\nProduct ID: ' + productId);
-  } else {
-    console.error('gtag function not found. GA4 might not be loaded.');
-  }
-}
 
-// Tambahkan event listener setelah halaman dimuat
-document.addEventListener('DOMContentLoaded', function() {
-  const links = document.querySelectorAll('a'); // Pilih semua elemen link
-
-  links.forEach(link => {
-    const url = link.href;
-    let platform = 'Unknown';
-    let productId = 'Unknown'; // Perlu disesuaikan cara mendapatkan ID produk
-
-    // --- Identifikasi Link Afiliasi (Sesuaikan!) ---
-    if (url.includes('warriorplus.com')) {
-      platform = 'WarriorPlus';
-      // Coba dapatkan ID produk dari URL atau atribut data (jika ada)
-      productId = link.dataset.productId || 'WarriorPlusProduct'; // Ganti 'WarriorPlusProduct' dengan ID sebenarnya jika bisa
-    } else if (url.includes('jvzoo.com')) {
-      platform = 'JVZoo';
-      productId = link.dataset.productId || 'JVZooProduct';
-    } // Tambahkan 'else if' untuk platform lain
-
-    // --- Tambahkan Listener jika link afiliasi teridentifikasi ---
-    if (platform !== 'Unknown') {
-      // Tambahkan atribut data untuk memudahkan
-      if (!link.dataset.platform) link.dataset.platform = platform;
-      if (!link.dataset.productId) link.dataset.productId = productId;
-
-      link.addEventListener('click', function(event) {
-        const clickedPlatform = event.currentTarget.dataset.platform;
-        const clickedProductId = event.currentTarget.dataset.productId;
-        const clickedUrl = event.currentTarget.href;
-        trackAffiliateClick(clickedPlatform, clickedProductId, clickedUrl);
-      });
-    }
-  });
-});
-</script>
 
 </body>
 </html>
