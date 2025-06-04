@@ -1,5 +1,9 @@
 // Fungsi untuk melacak klik afiliasi
 function trackAffiliateClick(platform, productName, productId) {
+  // --- TAMBAHKAN ALERT DI SINI UNTUK TES --- 
+  alert(`TES TRACKING:\nPlatform: ${platform}\nProduk: ${productName}\nID: ${productId}`);
+  // --- AKHIR TAMBAHAN ALERT ---
+
   // Pastikan gtag tersedia sebelum memanggilnya (jika menggunakan Google Analytics)
   if (typeof gtag === 'function') {
     gtag('event', 'affiliate_click', {
@@ -8,9 +12,6 @@ function trackAffiliateClick(platform, productName, productId) {
       'affiliate_platform': platform,
       'product_name': productName,
       'product_id': productId,
-      // Anda bisa menambahkan parameter lain jika perlu
-      // 'value': 1, // Contoh: jika ingin memberi nilai pada event
-      // 'currency': 'IDR' // Contoh: mata uang
     });
   } else {
     console.warn('gtag function not found. Google Analytics might not be loaded.');
@@ -40,17 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
           trackAffiliateClick(platform, productName, productId);
           
           // Optional: Tambahkan delay kecil sebelum navigasi jika diperlukan
-          // agar tracking sempat terkirim, terutama jika target="_blank" tidak digunakan.
-          // Jika menggunakan target="_blank", biasanya tidak perlu delay.
-          // Contoh delay (jika diperlukan):
-          /*
-          if (!affiliateLink.target || affiliateLink.target.toLowerCase() !== '_blank') {
-            event.preventDefault(); // Hentikan navigasi default
-            setTimeout(function() {
-              window.location.href = affiliateLink.href; // Lanjutkan navigasi setelah delay
-            }, 300); // Delay 300ms
-          }
-          */
+          // (Biasanya tidak perlu jika target="_blank")
         } else {
           console.warn('Missing data attributes for affiliate tracking on clicked element:', affiliateLink);
         }
@@ -58,4 +49,3 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
-
