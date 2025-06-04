@@ -107,6 +107,14 @@
                             <a href="#" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i></a>
                         </div>
                     </div>
+                    <!-- Blok Afiliasi Multi-Platform -->
+<div class="multi-affiliate-block" data-product-id="super-ai"> 
+  <h3 class="affiliate-heading">Dapatkan Produk Ini di:</h3>
+  <div class="affiliate-options">
+    <!-- Link afiliasi akan dimuat secara dinamis oleh JavaScript di sini -->
+  </div>
+  <p class="affiliate-disclaimer">Sebagai afiliasi, kami mungkin menerima komisi dari pembelian melalui link di atas tanpa biaya tambahan untuk Anda.</p>
+</div>
                     
                     <div class="product-guarantee">
                         <div class="guarantee-item">
@@ -677,5 +685,75 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 });
 </script>
+<!-- ... kode HTML lainnya ... -->
+
+<script src="affiliate-display.js"></script>
+<script src="affiliate-tracking.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Function to attach tracking to affiliate links
+  function attachAffiliateTracking() {
+    const affiliateOptionsDiv = document.querySelector('.multi-affiliate-block .affiliate-options');
+
+    // Check if the container exists
+    if (!affiliateOptionsDiv) {
+        console.log('Affiliate options container (.multi-affiliate-block .affiliate-options) not found.');
+        return;
+    }
+
+    // Use MutationObserver to wait for links to be added if they load dynamically
+    const observer = new MutationObserver(function(mutationsList, observer) {
+        for(const mutation of mutationsList) {
+            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                const links = affiliateOptionsDiv.querySelectorAll('a.affiliate-link');
+                if (links.length > 0) {
+                    console.log('Affiliate links found by observer, attaching tracking...');
+                    links.forEach(link => {
+                        link.removeEventListener('click', handleAffiliateClick);
+                        link.addEventListener('click', handleAffiliateClick);
+                    });
+                    // observer.disconnect(); // Optional: Uncomment if links load only once
+                }
+            }
+        }
+    });
+
+    observer.observe(affiliateOptionsDiv, { childList: true, subtree: true });
+
+    // Also attempt to attach listeners immediately
+    const initialLinks = affiliateOptionsDiv.querySelectorAll('a.affiliate-link');
+     if (initialLinks.length > 0) {
+         console.log('Initial affiliate links found, attaching tracking...');
+         initialLinks.forEach(link => {
+             link.addEventListener('click', handleAffiliateClick);
+         });
+     } else {
+         console.log('No initial affiliate links found. Waiting for dynamic loading via MutationObserver...');
+     }
+  }
+
+  // Handler function for the click event
+  function handleAffiliateClick(event) {
+      const link = event.currentTarget;
+      const platform = link.dataset.platform || 'Unknown Platform'; 
+      const productName = link.dataset.productName || 'Unknown Product'; 
+      const productId = link.dataset.productId || 'Unknown ID'; 
+
+      if (typeof trackAffiliateClick === 'function') {
+          trackAffiliateClick(platform, productName, productId);
+      } else {
+          console.error('trackAffiliateClick function is not defined.');
+      }
+  }
+
+  // Call the function to attach tracking
+  attachAffiliateTracking();
+
+});
+</script>
+
+</body>
+</html>
+
 </body>
 </html>
