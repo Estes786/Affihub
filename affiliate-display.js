@@ -1,5 +1,18 @@
 // Fungsi untuk memuat dan menampilkan link afiliasi dari data JSON
 async function loadAffiliateLinks(productId) {
+    alert('Memulai loadAffiliateLinks untuk produk: ' + productId); // <-- TAMBAHKAN BARIS INI
+    console.log('Memulai loadAffiliateLinks untuk produk:', productId); // <-- Atau tambahkan ini jika alert mengganggu
+    try {
+        // Pastikan path ini benar sesuai lokasi file Anda
+        const response = await fetch('affiliate-links.json'); 
+        // ... sisa kode ...
+    } catch (error) {
+        alert('Error di loadAffiliateLinks: ' + error); // <-- Bisa juga tambahkan alert di catch
+        console.error('Terjadi kesalahan saat memproses data affiliate:', error);
+    }
+}
+
+async function loadAffiliateLinks(productId) {
   try {
     // Dalam implementasi nyata, ini bisa diambil dari API atau file JSON
     const response = await fetch('affiliate-links.json'); // Hapus /data/
