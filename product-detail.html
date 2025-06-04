@@ -752,8 +752,35 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-</body>
-</html>
+    <!-- ... script affiliate-display.js ... -->
+    <!-- ... script affiliate-tracking.js ... -->
+    <!-- ... script listener dengan attachAffiliateTracking() ... -->
+
+    <!-- === TAMBAHKAN SCRIPT DI BAWAH INI === -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Cari blok afiliasi untuk mendapatkan ID produk
+        const affiliateBlock = document.querySelector('.multi-affiliate-block');
+        if (affiliateBlock) {
+          const productId = affiliateBlock.dataset.productId;
+          if (productId) {
+            // Panggil fungsi untuk memuat link afiliasi jika ID produk ditemukan
+            if (typeof loadAffiliateLinks === 'function') {
+              console.log('Memanggil loadAffiliateLinks untuk produk:', productId);
+              loadAffiliateLinks(productId);
+            } else {
+              console.error('Fungsi loadAffiliateLinks tidak ditemukan.');
+            }
+          } else {
+            console.error('Atribut data-product-id tidak ditemukan pada .multi-affiliate-block');
+          }
+        } else {
+          console.log('Elemen .multi-affiliate-block tidak ditemukan, tidak memuat link afiliasi.');
+        }
+      });
+    </script>
+    <!-- === BATAS PENAMBAHAN SCRIPT === -->
 
 </body>
 </html>
+
