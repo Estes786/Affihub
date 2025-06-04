@@ -1,9 +1,5 @@
 // Fungsi untuk melacak klik afiliasi
 function trackAffiliateClick(platform, productName, productId) {
-  // --- TAMBAHKAN ALERT DI SINI UNTUK TES --- 
-  alert(`TES TRACKING:\nPlatform: ${platform}\nProduk: ${productName}\nID: ${productId}`);
-  // --- AKHIR TAMBAHAN ALERT ---
-
   // Pastikan gtag tersedia sebelum memanggilnya (jika menggunakan Google Analytics)
   if (typeof gtag === 'function') {
     gtag('event', 'affiliate_click', {
