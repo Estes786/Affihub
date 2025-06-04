@@ -5,10 +5,10 @@
       // ... data produk lainnya
       "affiliate_links": [
         {
-          "platform": "Official",
-          "name": "Website Resmi",
+          "platform": "WarriorPlus",
+          "name": "WarriorPlus",
           "logo": "path/to/official-logo.png",
-          "url": "https://bit.ly/4kDD5HA", // <-- Link bit.ly dimasukkan di sini
+          "url": "https://warriorplus.com/o2/a/wjh7t5s/0", // <-- Link bit.ly dimasukkan di sini
           "price": 1499000,
           "discount_price": null,
           "currency": "IDR",
@@ -16,8 +16,8 @@
           "active": true
         },
 }
-          "platform": "Official",
-          "name": "Website Resmi",
+          "platform": "WarriorPlus",
+          "name": "WarriorPlus",
           "logo": "path/to/official-logo.png",
           "url": "https://super-ai.com/buy?ref=affihub",
           "price": 1499000,
