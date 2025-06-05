@@ -1,0 +1,120 @@
+'''
+[
+  {
+    "id": "super_ai",
+    "name": "Super AI: Aplikasi AI All-in-One",
+    "image_url": "/placeholder_super_ai.jpg", 
+    "price_display": "Rp 1.499.000",
+    "rating": 4.8,
+    "affiliate_links": [
+      { "platform": "Website Resmi", "url": "#" },
+      { "platform": "Promo Khusus", "url": "#" }
+    ],
+    "features": {
+      "key_features": [
+        "Pembuatan konten otomatis (blog, sosmed, email)",
+        "Analisis data AI prediktif",
+        "Chatbot builder tanpa kode",
+        "Optimalisasi SEO otomatis"
+      ],
+      "platforms": ["Web", "Windows", "MacOS"],
+      "integrations": ["Google Workspace", "Zapier", "Slack", "WordPress"]
+    },
+    "assessment": {
+      "pros": [
+        "Fitur sangat lengkap untuk berbagai kebutuhan",
+        "Kualitas output konten tinggi dan relevan",
+        "Antarmuka pengguna intuitif",
+        "Hemat waktu signifikan"
+      ],
+      "cons": [
+        "Harga relatif premium dibanding tools spesifik",
+        "Membutuhkan waktu untuk menguasai semua fitur"
+      ],
+      "best_for": "Digital Marketer, Content Creator, Agensi, Bisnis Online Skala Menengah & Besar"
+    },
+    "additional": {
+      "trial_period": "7 Hari Gratis",
+      "money_back_guarantee": "30 Hari",
+      "support_level": "Email, Live Chat Prioritas, Komunitas Pengguna"
+    }
+  },
+  {
+    "id": "ultra_email_pro",
+    "name": "UltraEmailPro - Solusi Email Marketing",
+    "image_url": "/placeholder_ultraemail.jpg", 
+    "price_display": "Rp 899.000",
+    "rating": 4.5,
+    "affiliate_links": [
+      { "platform": "Website Resmi", "url": "#" }
+    ],
+    "features": {
+      "key_features": [
+        "Automasi email marketing canggih",
+        "Segmentasi audiens detail",
+        "A/B testing untuk subjek & konten",
+        "Landing page builder terintegrasi"
+      ],
+      "platforms": ["Web"],
+      "integrations": ["Shopify", "WooCommerce", "Zapier", "Facebook Lead Ads"]
+    },
+    "assessment": {
+      "pros": [
+        "Fitur automasi sangat powerful",
+        "Pelaporan dan analisis mendalam",
+        "Harga kompetitif untuk fiturnya",
+        "Mudah diintegrasikan dengan platform e-commerce"
+      ],
+      "cons": [
+        "Antarmuka bisa terasa kompleks bagi pemula",
+        "Template email bawaan terbatas"
+      ],
+      "best_for": "E-commerce Owner, Email Marketer Profesional, Bisnis dengan List Email Besar"
+    },
+    "additional": {
+      "trial_period": "14 Hari Gratis",
+      "money_back_guarantee": "60 Hari",
+      "support_level": "Email, Basis Pengetahuan Lengkap"
+    }
+  },
+  {
+    "id": "funnel_master_3",
+    "name": "FunnelMaster 3.0 - Bangun Funnel Sekelas Pro",
+    "image_url": "/placeholder_funnelmaster.jpg", 
+    "price_display": "Rp 1.299.000",
+    "rating": 4.7,
+    "affiliate_links": [
+      { "platform": "Website Resmi", "url": "#" },
+      { "platform": "JVZoo", "url": "#" }
+    ],
+    "features": {
+      "key_features": [
+        "Drag & drop funnel builder visual",
+        "Template funnel siap pakai",
+        "Integrasi pembayaran (Payment gateway)",
+        "Analitik performa funnel"
+      ],
+      "platforms": ["Web"],
+      "integrations": ["Stripe", "PayPal", "Major Email Marketing Services", "Zapier"]
+    },
+    "assessment": {
+      "pros": [
+        "Sangat mudah digunakan bahkan tanpa coding",
+        "Banyak template berkualitas tinggi",
+        "Fleksibel untuk berbagai jenis funnel",
+        "Analitik yang membantu optimasi"
+      ],
+      "cons": [
+        "Kustomisasi desain tingkat lanjut agak terbatas",
+        "Biaya bisa bertambah jika butuh add-on"
+      ],
+      "best_for": "Affiliate Marketer, Digital Product Seller, Coach/Consultant, Pemula dalam Funnel Building"
+    },
+    "additional": {
+      "trial_period": "Tidak Ada (Demo Tersedia)",
+      "money_back_guarantee": "30 Hari",
+      "support_level": "Email, Grup Facebook Eksklusif"
+    }
+  }
+]
+'''

@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contoh Fitur Perbandingan Produk</title>
+    <link rel="stylesheet" href="comparison.css">
+</head>
+<body>
+
+<h1>Contoh Produk</h1>
+
+<div class="product-grid">
+    <!-- Contoh Kartu Produk (Struktur disesuaikan dengan web Anda) -->
+    <div class="product-card" data-product-id="super_ai">
+        <img src="/placeholder_super_ai.jpg" alt="Super AI" style="max-width: 100px; height: auto;">
+        <h3>Super AI: Aplikasi AI All-in-One</h3>
+        <p>Rp 1.499.000</p>
+        <button class="compare-button" data-id="super_ai">Bandingkan</button>
+        <a href="#" class="details-button">Lihat Detail</a>
+    </div>
+
+    <div class="product-card" data-product-id="ultra_email_pro">
+        <img src="/placeholder_ultraemail.jpg" alt="UltraEmailPro" style="max-width: 100px; height: auto;">
+        <h3>UltraEmailPro - Solusi Email Marketing</h3>
+        <p>Rp 899.000</p>
+        <button class="compare-button" data-id="ultra_email_pro">Bandingkan</button>
+        <a href="#" class="details-button">Lihat Detail</a>
+    </div>
+
+    <div class="product-card" data-product-id="funnel_master_3">
+        <img src="/placeholder_funnelmaster.jpg" alt="FunnelMaster 3.0" style="max-width: 100px; height: auto;">
+        <h3>FunnelMaster 3.0 - Bangun Funnel Sekelas Pro</h3>
+        <p>Rp 1.299.000</p>
+        <button class="compare-button" data-id="funnel_master_3">Bandingkan</button>
+        <a href="#" class="details-button">Lihat Detail</a>
+    </div>
+
+    <!-- Tambahkan lebih banyak kartu produk sesuai kebutuhan -->
+
+</div>
+
+<!-- Floating Comparison Bar (Awalnya tersembunyi) -->
+<div id="comparison-bar" class="comparison-bar hidden">
+    <div id="comparison-items">
+        <!-- Item perbandingan akan ditambahkan di sini oleh JS -->
+    </div>
+    <div class="comparison-actions">
+        <button id="compare-now-button" disabled>Bandingkan (0)</button>
+        <button id="clear-comparison-button">Hapus Semua</button>
+    </div>
+</div>
+
+<!-- Comparison Modal (Awalnya tersembunyi) -->
+<div id="comparison-modal" class="comparison-modal hidden">
+    <div class="modal-content">
+        <button id="close-modal-button" class="close-modal-button">&times;</button>
+        <h2>Perbandingan Produk</h2>
+        <div id="comparison-table-container" class="comparison-table-container">
+            <!-- Tabel perbandingan akan dirender di sini oleh JS -->
+        </div>
+    </div>
+</div>
+
+<script src="comparison.js"></script>
+</body>
+</html>
+
